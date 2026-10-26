@@ -1,0 +1,33 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    env_file: .env
+    volumes:
+      - ./cache:/app/cache
+    deploy:
+      resources:
+        limits:
+          memory: 1G       # Prevent unlimited memory growth
+          cpus: '1.0'      # 1 CPU core max
+        reservations:
+          memory: 512M     # Guaranteed minimum
+          cpus: '0.5'
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped  # Auto-restart on crash
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - BACKEND_URL=http://backend:8000

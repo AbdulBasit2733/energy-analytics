@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.epexspot.com)",
+      "WebFetch(domain:ui.shadcn.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:www.ofgem.gov.uk)",
+      "Bash(git init *)",
+      "Bash(npm create *)",
+      "Bash(pip install *)"
+    ]
+  }
+}
