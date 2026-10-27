@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://energy-analytics-three.vercel.app/api/:path*"
+    }
+  ]
+}

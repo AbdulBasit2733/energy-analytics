@@ -162,17 +162,11 @@ volumes:
 **Frontend on Vercel:**
 1. Import project from Git
 2. Framework: Vite
+   - Set the project Root Directory to `frontend`
 3. Build command: `npm run build`
 4. Output directory: `dist`
-5. Add environment variable: `VITE_API_URL=https://<backend-domain>`
-6. Add rewrites in `vercel.json`:
-   ```json
-   {
-     "rewrites": [
-       { "source": "/api/:path*", "destination": "https://<backend-domain>/api/:path*" }
-     ]
-   }
-   ```
+5. The checked-in `frontend/vercel.json` rewrites `/api/*` requests to the deployed backend, so a `VITE_API_URL` setting is not needed for this setup. Update its destination if the backend domain changes.
+6. Confirm `https://<backend-domain>/api/health` returns HTTP 200 after deploying the backend.
 
 ### Option 3: AWS (ECS + Fargate)
 
