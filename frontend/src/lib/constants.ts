@@ -12,10 +12,11 @@ export const CHART_COLORS_HEX = {
   bias: "#f59e0b",
 } as const;
 
-// Use environment variable or fallback to relative /api
-export const API_BASE = import.meta.env.VITE_API_URL
-  ? `${import.meta.env.VITE_API_URL}/api`
-  : "/api";
+const configuredApiOrigin = import.meta.env.VITE_API_URL
+  ?.replace(/\/+$/, "")
+  .replace(/\/api$/i, "");
+
+export const API_BASE = configuredApiOrigin ? `${configuredApiOrigin}/api` : "/api";
 
 export const ANALYSIS_PERIOD = "January 2026";
 

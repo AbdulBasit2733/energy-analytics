@@ -37,7 +37,8 @@ This dashboard answers two key questions:
 ## Quick Start (Docker)
 
 ```bash
-git clone <repo-url> && cd uk-energy-analytics-dashboard
+git clone https://github.com/AbdulBasit2733/energy-analytics.git
+cd energy-analytics
 cp .env.example .env
 docker compose up --build
 ```
@@ -45,6 +46,10 @@ docker compose up --build
 The dashboard will be available at `http://localhost:3000`. The backend API is at `http://localhost:8000/api`.
 
 On first startup, the backend fetches January 2026 data from the Elexon API and caches it to disk. Subsequent startups load from cache with zero API calls.
+
+On Windows PowerShell, use `Copy-Item .env.example .env` instead of `cp .env.example .env` to create the environment file.
+
+If the backend image build fails while downloading packages from PyPI, check that Docker can access `pypi.org` and retry `docker compose up --build`. The backend install step retries longer network timeouts automatically.
 
 ## Quick Start (Local Development)
 
@@ -65,6 +70,7 @@ npm run dev
 ```
 
 The frontend dev server at `http://localhost:5173` proxies `/api` requests to the backend.
+For a separate frontend/backend deployment, set `VITE_API_URL` to the backend origin only (for example, `https://your-backend.example.com`, without `/api`) when building the frontend. The frontend adds `/api` to that origin. Set the backend's `CORS_ORIGINS` to include the deployed frontend origin.
 
 ## Testing
 
@@ -86,6 +92,7 @@ cd frontend && npm run build
 | `ANALYSIS_MONTH` | `1` | Month for analysis (January) |
 | `CACHE_DIR` | `./cache` | Directory for cached API responses |
 | `CORS_ORIGINS` | `http://localhost:5173,http://localhost:3000` | Allowed CORS origins |
+| `VITE_API_URL` | `/api` (relative) | Backend origin for the frontend; use the origin only, without an `/api` suffix |
 
 ## API Documentation
 
